@@ -1,0 +1,54 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.onboarding'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+ext {
+    swaggerVersion = '2.9.2'
+    springBootVersion = '2.6.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'http://jpos.org/maven'; allowInsecureProtocol = true }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    annotationProcessor 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.modelmapper:modelmapper:3.0.0'
+    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-actuator:${springBootVersion}"
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+    implementation 'org.springframework.security:spring-security-core:5.6.1'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.1'
+    implementation 'org.springframework.boot:spring-boot-starter-security:2.7.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.2'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
