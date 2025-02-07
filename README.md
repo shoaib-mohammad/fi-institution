@@ -28,8 +28,12 @@ Maps users to their roles (a user can have multiple roles).
 Defines permissions for each role:
 - **Admin inherits all permissions from Admin & User roles**
 
+### **Institution Table**
+Defines institutions with their codes and currencies.
+
 ## **Authentication API**
 ### **Login API**
+- `POST /authentication` → (returns bearer token)
 - **Admin Login:**
   ```json
   {
@@ -46,7 +50,7 @@ Defines permissions for each role:
   ```
 - The response includes a **Bearer Token** that must be used to authorize requests.
 
-## **Institution API**
+## **Institution APIs**
 ### **Institution Model**
 - `Institution Code`: Unique, numeric, max length **5**
 - `Institution Name`: Required, max length **50**
@@ -54,11 +58,21 @@ Defines permissions for each role:
 - `Currency List`: Example: **LBP, USD**
 
 ### **Available Endpoints**
-- `GET /institutions/active` → Get **active** institutions (status = 1)
-- `GET /institutions/{id}` → Get institution by **ID**
-- `GET /institutions` → Get **all** institutions
-- `POST /institutions` → **Create/Update** institution (if `id = 0`, create; otherwise, update)
-- `DELETE /institutions/{id}` → Delete institution by **ID**
+- `POST /institution` → **Create/Update** institution (if `id = 0` or null, create; otherwise, update)
+Note: currencyList is optional.
+```json
+{
+  "id": 0,
+  "name": "MDSL",
+  "code": "MDS",
+  "currencyList": ["USD", "LBP"],
+  "status": "ACTIVE"
+}  
+```
+- `GET /institution/active` → Get **active** institutions (status = 1)
+- `GET /institution/{id}` → Get institution by **ID**
+- `GET /institution` → Get **all** institutions
+- `DELETE /institution/{id}` → Delete institution by **ID**
 
 ### **Permissions**
 - **ROLE_D_INST** → Only **Admin** can delete institutions
@@ -78,9 +92,15 @@ Defines permissions for each role:
     - `RestCommonResponseDTO` ensures a consistent response format
 
 ## **Running the Application**
-- The application runs on **port 9092**
-- Swagger UI is available at: **[http://localhost:9092/swagger-ui.html#/](http://localhost:9092/swagger-ui.html#/)**
-- **Authorize API calls** in Swagger by adding the **Bearer Token**
+- The application runs on **port 9092**.
+- **API Documentation:** Available via **Swagger UI** at:  
+  [http://localhost:9092/swagger-ui.html](http://localhost:9092/swagger-ui.html)
+- **Swagger Title:** `Fi Institution`
+- **How to Test via Swagger:**
+    1. Login using the **authentication API** to retrieve a **Bearer Token**.
+    2. Click **Authorize** in Swagger UI and enter the token.
+    3. Test all secured endpoints.
+
 
 ## **Test Requirements**
 1. **Database:** Uses embedded **H2 database**.
@@ -91,5 +111,3 @@ Defines permissions for each role:
     - Create/Update institution based on `id`
     - Delete institution by ID
     - Login API for authentication (returns bearer token)
-
-Happy Coding! 😊 😊 😊 

@@ -13,5 +13,4 @@ public interface FindAllService<MOD extends BaseEntity, R extends JpaRepository<
     default List<MOD> findAll() {
         return getRepository().findAll();
     }
-
 }

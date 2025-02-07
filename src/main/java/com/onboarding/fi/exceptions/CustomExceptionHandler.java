@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
 import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
@@ -34,6 +35,17 @@ public class CustomExceptionHandler {
         ErrorResponseApisEnum errorResponseApisEnum = ErrorResponseApisEnum.Unauthorized;
         exceptionResponse.setErrorCode(errorResponseApisEnum.getErrorCode());
         exceptionResponse.setMessage(LocaleMessageUtil.getMessageByKey(errorResponseApisEnum.getMessage()));
+        exceptionResponse.setTitle(LocaleMessageUtil.getMessageByKey(errorResponseApisEnum.getTitle()));
+        return new ResponseEntity<>(exceptionResponse, errorResponseApisEnum.getHttpStatus());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public final ResponseEntity<RestCommonResponseDTO> handleConstraintViolationException(ConstraintViolationException ex) {
+        log.error("Constraint Violation Exception", ex);
+        RestCommonResponseDTO exceptionResponse = new RestCommonResponseDTO(false);
+        ErrorResponseApisEnum errorResponseApisEnum = ErrorResponseApisEnum.ServerError;
+        exceptionResponse.setErrorCode(errorResponseApisEnum.getErrorCode());
+        exceptionResponse.setMessage(ex.getMessage());
         exceptionResponse.setTitle(LocaleMessageUtil.getMessageByKey(errorResponseApisEnum.getTitle()));
         return new ResponseEntity<>(exceptionResponse, errorResponseApisEnum.getHttpStatus());
     }
