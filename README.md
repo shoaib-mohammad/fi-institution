@@ -33,7 +33,7 @@ Defines institutions with their codes and currencies.
 
 ## **Authentication API**
 ### **Login API**
-- `POST /authentication` → (returns bearer token)
+- `POST /login` → (returns bearer token)
 - **Admin Login:**
   ```json
   {
@@ -97,7 +97,7 @@ Note: currencyList is optional.
   [http://localhost:9092/swagger-ui.html](http://localhost:9092/swagger-ui.html)
 - **Swagger Title:** `Fi Institution`
 - **How to Test via Swagger:**
-    1. Login using the **authentication API** to retrieve a **Bearer Token**.
+    1. Login **API** to retrieve a **Bearer Token**.
     2. Click **Authorize** in Swagger UI and enter the token.
     3. Test all secured endpoints.
 
